@@ -14,6 +14,8 @@ import {
 } from '@iwsdk/core';
 
 import { PanelSystem } from './panel.js'; // system for displaying "Enter VR" panel on Quest 1
+import {PhysicsBody, PhysicsShape, PhysicsShapeType, PhysicsState, PhysicsSystem} from '@iwsdk/core';
+
 
 const assets = { };
 
@@ -44,6 +46,12 @@ World.create(document.getElementById('scene-container'), {
   floorMesh.rotation.x = -Math.PI / 2;
   const floorEntity = world.createTransformEntity(floorMesh);
   floorEntity.addComponent(LocomotionEnvironment, { type: EnvironmentType.STATIC });
+
+  sphereEntity.addComponent(PhysicsShape, { shape: PhysicsShapeType.Auto,  density: 0.2,  friction: 0.5,  restitution: 0.9 }); 
+  sphereEntity.addComponent(PhysicsBody, { state: PhysicsState.Dynamic });
+
+  world.registerSystem(PhysicsSystem).registerComponent(PhysicsBody).registerComponent(PhysicsShape);
+
 
 
 
